@@ -8,17 +8,38 @@ const myApp = require('./myApp');
 const express = require('express');
 const app = express();
 
+
+app.use("/public", function (req, res, next) {
+  console.log(`${req.method} ${req.path} -${req.ip}`);
+  next();
+});
+
 app.get("/", function (req, res) {
+
   res.sendFile(__dirname + "/views/index.html")
 });
 
-app.get("/json", function (req, res) {
-  res.json({ "message": "Hello json" })
-})
+/*app.get("/json", function (req, res) {
+  //process.env.MESSAGE_STYLE;
+  if (process.env.MESSAGE_STYLE = "uppercase") {
+    res = "Hello World".toUpperCase();
+  } else {
+    res = "Hello World";
+  }
+  //res.json({ "message": "Hello json" })
+})*/
 
 app.use("/public", express.static(__dirname + "/public"))
 
 
+app.get("/public/example", (req, res) => {
+  res.send("Hello from /public/example route!");
+});
+/*if (process.env.Var_Name = "allcaps") {
+  response = "Hello World".toUpperCase();
+} else {
+  response = "Hello World";
+}*/
 
 if (!process.env.DISABLE_XORIGIN) {
   app.use((req, res, next) => {
@@ -29,8 +50,6 @@ if (!process.env.DISABLE_XORIGIN) {
       res.setHeader('Access-Control-Allow-Origin', origin);
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     }
-
-
     next();
   });
 }
