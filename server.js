@@ -9,7 +9,7 @@ const express = require('express');
 const app = express();
 
 
-app.use("/public", function (req, res, next) {
+app.use("/", function middleware(req, res, next) {
   console.log(`${req.method} ${req.path} -${req.ip}`);
   next();
 });
