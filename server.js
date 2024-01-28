@@ -24,8 +24,9 @@ app.get("/now", function (req, res, next) {
 app.get("/:word/echo", (req, res) => {
   var { word } = req.params;
   res.json({
-    echo: word
+    echo1: word
   });
+  console.log(`echo: ${word}`);
 });
 
 
