@@ -9,6 +9,26 @@ const express = require('express');
 const app = express();
 
 
+app.get("/now", function (req, res, next) {
+  req.time = new Date().toString();  // Hypothetical synchronous operation
+  next();
+}, function (req, res) {
+  res.send({ time: req.time })
+});
+
+// app.get("/:param1/:prarm2", (req, res) => {
+//   var { praram1, param2 } = req.params;
+//   res.json(req.params)
+// });
+
+app.get("/:word/echo", (req, res) => {
+  var { word } = req.params;
+  res.json({
+    echo: word
+  });
+});
+
+
 app.use("/", function middleware(req, res, next) {
   console.log(`${req.method} ${req.path} -${req.ip}`);
   next();
