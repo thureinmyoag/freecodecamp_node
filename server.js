@@ -6,16 +6,28 @@
 const bGround = require('fcc-express-bground');
 const myApp = require('./myApp');
 const express = require('express');
+let bodyParser = require('body-parser');
 const app = express();
 
 
-app.get("/now", function (req, res, next) {
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(bodyParser.json());
+
+
+/*app.get("/now", function (req, res, next) {
   req.time = new Date().toString();  // Hypothetical synchronous operation
   next();
 }, function (req, res) {
   res.send({ time: req.time })
-});
+});*/
 
+
+app.post("/name", function (req, res) {
+  //
+  var res_str = req.body.first + "" + req.body.last;
+  res.json({ name: res_str });
+});
 // app.get("/:param1/:prarm2", (req, res) => {
 //   var { praram1, param2 } = req.params;
 //   res.json(req.params)
